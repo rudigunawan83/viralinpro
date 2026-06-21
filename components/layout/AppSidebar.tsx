@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   BarChart3,
   Brain,
@@ -13,11 +13,13 @@ import {
   Home,
   Inbox,
   Layers,
+  LogOut,
   Megaphone,
   Rocket,
   Target,
   Users,
 } from "lucide-react";
+import { clearAllLocalStorage } from "@/lib/auth-storage";
 import { useAppContext } from "@/lib/app-context";
 import { cn } from "@/lib/utils";
 
@@ -39,7 +41,13 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isSidebarCollapsed } = useAppContext();
+
+  function handleLogout() {
+    clearAllLocalStorage();
+    router.replace("/login");
+  }
 
   return (
     <aside
@@ -83,22 +91,33 @@ export function AppSidebar() {
       </nav>
 
       {!isSidebarCollapsed ? (
-        <div className="mt-auto rounded-2xl border border-app-border bg-[#f8f9fd] p-4">
-          <p className="text-[11px] text-app-text-secondary">Paket Anda</p>
-          <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-app-primary/10 px-2 py-1 text-xs font-medium text-app-primary">
-            <Crown className="h-3.5 w-3.5" />
-            Pro Plan
+        <div className="mt-auto space-y-3">
+          <div className="rounded-2xl border border-app-border bg-[#f8f9fd] p-4">
+            <p className="text-[11px] text-app-text-secondary">Paket Anda</p>
+            <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-app-primary/10 px-2 py-1 text-xs font-medium text-app-primary">
+              <Crown className="h-3.5 w-3.5" />
+              Pro Plan
+            </div>
+            <p className="mt-3 text-[11px] text-app-text-secondary">Berakhir 12 Juni 2025</p>
+            <div className="mt-3 h-2 overflow-hidden rounded-full bg-app-border">
+              <div className="h-full w-3/4 rounded-full bg-app-primary" />
+            </div>
+            <p className="mt-2 text-[11px] text-app-text-secondary">75% dari kuota AI terpakai</p>
+            <button
+              type="button"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-app-primary/45 bg-white px-3 py-2 text-xs font-semibold text-app-primary transition hover:bg-app-primary/5"
+            >
+              Kelola Paket
+            </button>
           </div>
-          <p className="mt-3 text-[11px] text-app-text-secondary">Berakhir 12 Juni 2025</p>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-app-border">
-            <div className="h-full w-3/4 rounded-full bg-app-primary" />
-          </div>
-          <p className="mt-2 text-[11px] text-app-text-secondary">75% dari kuota AI terpakai</p>
+
           <button
             type="button"
-            className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-app-primary/45 bg-white px-3 py-2 text-xs font-semibold text-app-primary transition hover:bg-app-primary/5"
+            onClick={handleLogout}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100"
           >
-            Kelola Paket
+            <LogOut className="h-3.5 w-3.5" />
+            Logout
           </button>
         </div>
       ) : null}

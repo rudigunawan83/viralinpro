@@ -47,3 +47,7 @@ export function getAccessToken(): string | null {
 export function clearAuthSession() {
   localStorage.removeItem(AUTH_STORAGE_KEY);
 }
+
+export function clearAllLocalStorage() {
+  localStorage.clear();
+}
