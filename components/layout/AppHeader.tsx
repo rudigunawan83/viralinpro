@@ -1,7 +1,9 @@
 "use client";
 
+import { useMemo } from "react";
 import { Bell, ChevronDown, Gift, Menu, Plus } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { getAuthSession } from "@/lib/auth-storage";
 import { useAppContext } from "@/lib/app-context";
 
 const titleMap: Record<string, string> = {
@@ -24,6 +26,23 @@ export function AppHeader() {
   const { toggleSidebar } = useAppContext();
   const pathname = usePathname();
   const title = titleMap[pathname] ?? "Viralin.pro";
+  const profile = useMemo(() => {
+    const session = getAuthSession();
+    const fullName = session?.data?.user?.fullName?.trim() || "Pengguna";
+    const role = session?.data?.user?.role?.trim() || "Member";
+    const initials = fullName
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase() ?? "")
+      .join("") || "U";
+
+    return {
+      fullName,
+      role,
+      initials,
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-20 glass border-b border-app-border shadow-sm">
@@ -39,7 +58,7 @@ export function AppHeader() {
           </button>
           <div className="animate-slide-in-left">
             <p className="text-[24px] font-bold leading-none tracking-[-0.03em] text-app-text-primary">{title}</p>
-            <p className="mt-1 text-[12px] text-app-text-secondary">Selamat datang kembali, Andi! 👋</p>
+            <p className="mt-1 text-[12px] text-app-text-secondary">Selamat datang kembali, {profile.fullName}! 👋</p>
           </div>
         </div>
 
@@ -68,11 +87,11 @@ export function AppHeader() {
           </button>
           <button className="inline-flex items-center gap-2 rounded-lg border border-transparent px-3 py-1.5 transition hover:bg-app-surface/50 hover:border-app-border hover:shadow-md">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-app-primary to-app-accent text-sm font-semibold text-white shadow-md shadow-app-primary/30">
-              AP
+              {profile.initials}
             </div>
             <div className="hidden text-left sm:block">
-              <p className="text-sm font-medium text-app-text-primary">Andi Pratama</p>
-              <p className="text-xs text-app-text-secondary">Owner</p>
+              <p className="text-sm font-medium text-app-text-primary">{profile.fullName}</p>
+              <p className="text-xs text-app-text-secondary">{profile.role}</p>
             </div>
             <ChevronDown className="h-4 w-4 text-app-text-secondary" />
           </button>

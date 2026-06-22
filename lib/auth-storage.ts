@@ -21,10 +21,18 @@ export type LoginSuccessResponse = {
 const AUTH_STORAGE_KEY = "viralin.auth.session";
 
 export function setAuthSession(payload: LoginSuccessResponse) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(payload));
 }
 
 export function getAuthSession(): LoginSuccessResponse | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   const raw = localStorage.getItem(AUTH_STORAGE_KEY);
 
   if (!raw) {
@@ -44,10 +52,28 @@ export function getAccessToken(): string | null {
   return session?.data.accessToken ?? null;
 }
 
+export function getAuthorizationHeader(): string | null {
+  const accessToken = getAccessToken();
+
+  if (!accessToken) {
+    return null;
+  }
+
+  return `Bearer ${accessToken}`;
+}
+
 export function clearAuthSession() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 
 export function clearAllLocalStorage() {
+  if (typeof window === "undefined") {
+    return;
+  }
+
   localStorage.clear();
 }

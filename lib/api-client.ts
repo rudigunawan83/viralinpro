@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/lib/auth-storage";
+import { getAuthorizationHeader } from "@/lib/auth-storage";
 
 function resolveApiUrl(input: string) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -36,13 +36,13 @@ export async function apiFetch<TResponse>(
   input: string,
   init?: RequestInit,
 ): Promise<TResponse> {
-  const token = typeof window !== "undefined" ? getAccessToken() : null;
+  const authHeader = typeof window !== "undefined" ? getAuthorizationHeader() : null;
 
   const headers = new Headers(init?.headers);
   headers.set("Content-Type", "application/json");
 
-  if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
+  if (authHeader) {
+    headers.set("Authorization", authHeader);
   }
 
   const response = await fetch(resolveApiUrl(input), {
