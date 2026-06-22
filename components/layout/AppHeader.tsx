@@ -2,12 +2,14 @@
 
 import { useMemo } from "react";
 import { Bell, ChevronDown, Gift, Menu, Plus } from "lucide-react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getAuthSession } from "@/lib/auth-storage";
 import { useAppContext } from "@/lib/app-context";
 
 const titleMap: Record<string, string> = {
   "/dashboard": "Dashboard",
+  "/buat-konten": "Buat Konten",
   "/riset": "Riset Konten",
   "/kompetitor": "Analisis Kompetitor",
   "/studio": "Studio AI",
@@ -25,7 +27,7 @@ const titleMap: Record<string, string> = {
 export function AppHeader() {
   const { toggleSidebar } = useAppContext();
   const pathname = usePathname();
-  const title = titleMap[pathname] ?? "Viralin.pro";
+  const title = titleMap[pathname ?? ""] ?? "Viralin.pro";
   const profile = useMemo(() => {
     const session = getAuthSession();
     const fullName = session?.data?.user?.fullName?.trim() || "Pengguna";
@@ -63,13 +65,13 @@ export function AppHeader() {
         </div>
 
         <div className="flex items-center gap-2.5">
-          <button
-            type="button"
+          <Link
+            href="/buat-konten"
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-app-primary to-app-accent px-4 py-2 text-sm font-semibold text-white shadow-md shadow-app-primary/30 transition hover:shadow-lg hover:shadow-app-primary/40 hover:scale-105"
           >
             <Plus className="h-4 w-4" />
             Buat Konten
-          </button>
+          </Link>
           <button
             type="button"
             className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-app-border/50 bg-app-surface/50 text-app-text-secondary transition hover:bg-app-surface hover:text-app-primary hover:shadow-md"

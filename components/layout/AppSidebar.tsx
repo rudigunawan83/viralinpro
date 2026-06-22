@@ -15,6 +15,7 @@ import {
   Layers,
   LogOut,
   Megaphone,
+  Plus,
   Rocket,
   Target,
   Users,
@@ -25,6 +26,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
+  { href: "/buat-konten", label: "Buat Konten", icon: Plus },
   { href: "/riset", label: "Riset Konten", icon: Compass },
   { href: "/kompetitor", label: "Analisis Kompetitor", icon: Target },
   { href: "/studio", label: "Studio AI", icon: Rocket },
