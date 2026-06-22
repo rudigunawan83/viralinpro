@@ -60,49 +60,51 @@ type TopContentProps = {
 
 export function TopContent({ items = defaultContentItems }: TopContentProps) {
   return (
-    <section className="rounded-2xl border border-app-border bg-app-surface p-4 shadow-[0_6px_18px_rgba(26,33,52,0.05)]">
-      <div className="mb-3 flex items-center justify-between">
+    <section className="rounded-xl border border-app-border/50 bg-gradient-to-br from-app-surface via-app-surface to-app-surface/50 p-5 shadow-md shadow-app-primary/5 transition hover:shadow-lg hover:shadow-app-primary/10">
+      <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-[30px] font-semibold tracking-[-0.025em] text-app-text-primary">Konten Terbaik</h2>
+          <h2 className="text-[28px] font-bold tracking-[-0.025em] text-app-text-primary">Konten Terbaik</h2>
           <span className="text-xs text-app-text-secondary">i</span>
         </div>
-        <button type="button" className="inline-flex items-center rounded-full bg-app-primary/10 px-3 py-1 text-[11px] font-semibold text-app-primary">
+        <button type="button" className="inline-flex items-center rounded-lg bg-app-primary/15 px-3 py-1.5 text-xs font-bold text-app-primary transition hover:bg-app-primary/25">
           Lihat Semua
         </button>
       </div>
 
-      <div className="mb-3 flex gap-2">
-        <button className="rounded-full bg-app-primary px-3 py-1 text-[11px] font-semibold text-white">Tayangan</button>
-        <button className="rounded-full border border-app-border px-3 py-1 text-[11px] font-medium text-app-text-secondary">Interaksi</button>
-        <button className="rounded-full border border-app-border px-3 py-1 text-[11px] font-medium text-app-text-secondary">Komentar</button>
-        <button className="rounded-full border border-app-border px-3 py-1 text-[11px] font-medium text-app-text-secondary">Bagikan</button>
+      <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
+        <button className="rounded-lg bg-gradient-to-r from-app-primary to-app-accent px-3.5 py-1.5 text-xs font-bold text-white shadow-md shadow-app-primary/30 flex-shrink-0">Tayangan</button>
+        <button className="rounded-lg border border-app-border/50 bg-app-surface/50 px-3.5 py-1.5 text-xs font-semibold text-app-text-secondary transition hover:bg-app-surface flex-shrink-0">Interaksi</button>
+        <button className="rounded-lg border border-app-border/50 bg-app-surface/50 px-3.5 py-1.5 text-xs font-semibold text-app-text-secondary transition hover:bg-app-surface flex-shrink-0">Komentar</button>
+        <button className="rounded-lg border border-app-border/50 bg-app-surface/50 px-3.5 py-1.5 text-xs font-semibold text-app-text-secondary transition hover:bg-app-surface flex-shrink-0">Bagikan</button>
       </div>
 
-      <div className="grid gap-2.5 lg:grid-cols-4">
+      <div className="grid gap-3 lg:grid-cols-4">
         {items.map((item) => (
-          <article key={item.title} className="rounded-xl border border-app-border bg-app-background p-2">
-            <div className={`relative h-24 rounded-lg bg-gradient-to-br ${item.gradient} p-3 text-white`}>
-              <span className="absolute right-2 top-2 rounded-md bg-black/30 px-1.5 py-0.5 text-[10px] font-medium">
+          <article key={item.title} className="group overflow-hidden rounded-lg border border-app-border/50 bg-app-surface/50 transition hover:border-app-primary/30 hover:shadow-lg hover:shadow-app-primary/10">
+            <div className={`relative h-28 bg-gradient-to-br ${item.gradient} p-3 text-white transition group-hover:shadow-md`}>
+              <span className="absolute right-2 top-2 rounded-md bg-black/40 px-2 py-1 text-xs font-bold backdrop-blur">
                 {item.rank}
               </span>
-              <p className="mt-5 text-[13px] font-semibold leading-tight">{item.title}</p>
+              <p className="mt-7 text-sm font-bold leading-snug line-clamp-2">{item.title}</p>
             </div>
-            <p className="mt-2 text-[10px] text-app-text-secondary">
-              {item.platform} - {item.date}
-            </p>
-            <div className="mt-2 flex items-center gap-2.5 text-[10px] text-app-text-secondary">
-              <span className="inline-flex items-center gap-1">
-                <Eye className="h-3 w-3" />
-                {item.views}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <Heart className="h-3 w-3" />
-                {item.likes}
-              </span>
-              <span className="inline-flex items-center gap-1">
-                <MessageCircle className="h-3 w-3" />
-                {item.comments}
-              </span>
+            <div className="p-3">
+              <p className="text-xs text-app-text-secondary font-medium">
+                {item.platform} • {item.date}
+              </p>
+              <div className="mt-2.5 flex items-center gap-3 text-xs text-app-text-secondary">
+                <span className="inline-flex items-center gap-1 hover:text-app-primary transition">
+                  <Eye className="h-3.5 w-3.5" />
+                  {item.views}
+                </span>
+                <span className="inline-flex items-center gap-1 hover:text-red-500 transition">
+                  <Heart className="h-3.5 w-3.5" />
+                  {item.likes}
+                </span>
+                <span className="inline-flex items-center gap-1 hover:text-app-primary transition">
+                  <MessageCircle className="h-3.5 w-3.5" />
+                  {item.comments}
+                </span>
+              </div>
             </div>
           </article>
         ))}

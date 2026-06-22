@@ -1,39 +1,48 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 
-export function AIInsightCard() {
-  return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#6044ff] via-[#6d5ef9] to-[#7f56ff] p-4 text-white shadow-[0_10px_28px_rgba(78,52,210,0.32)]">
-      <span className="absolute right-[-30px] top-[-20px] h-24 w-24 rounded-full bg-white/15 blur-2xl" />
-      <span className="absolute bottom-[-20px] right-[130px] h-16 w-16 rounded-full bg-white/10 blur-xl" />
+type AIInsightCardProps = {
+  title?: string;
+  description?: string;
+  recommendation?: string;
+};
 
-      <div className="relative flex items-start justify-between gap-3">
+export function AIInsightCard({
+  title = "Insight AI Hari Ini",
+  description = "Konten video tutorial berdurasi 20-30 detik sedang mendapatkan performa 42% lebih tinggi dibanding jenis konten lainnya di niche Anda.",
+  recommendation = "Lihat Rekomendasi",
+}: AIInsightCardProps) {
+  return (
+    <section className="relative overflow-hidden rounded-xl bg-gradient-to-br from-app-primary via-app-secondary to-app-accent p-5 text-white shadow-lg shadow-app-primary/40">
+      <span className="absolute right-[-40px] top-[-40px] h-32 w-32 rounded-full bg-white/10 blur-3xl" />
+      <span className="absolute bottom-[-30px] right-[100px] h-20 w-20 rounded-full bg-white/5 blur-2xl" />
+
+      <div className="relative flex items-start justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
-            <Sparkles className="h-3.5 w-3.5" />
-            Insight AI Hari Ini
-            <span className="rounded-full bg-white/20 px-1.5 py-0.5 text-[10px]">AI</span>
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-bold backdrop-blur">
+            <Sparkles className="h-4 w-4" />
+            {title}
+            <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold">AI</span>
           </div>
-          <p className="mt-3 max-w-[330px] text-[13px] leading-relaxed text-white/90">
-            Konten video tutorial berdurasi 20-30 detik sedang mendapatkan performa 42% lebih tinggi dibanding
-            jenis konten lainnya di niche Anda.
+          <p className="mt-4 max-w-[350px] text-[14px] leading-relaxed text-white/95">
+            {description}
           </p>
           <button
             type="button"
-            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-xs font-semibold text-app-primary"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-bold text-app-primary shadow-lg shadow-white/20 transition hover:shadow-xl hover:scale-105"
           >
-            Lihat Rekomendasi
+            {recommendation}
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="relative hidden h-24 w-24 items-center justify-center sm:flex">
-          <span className="absolute h-24 w-24 rounded-full bg-white/25" />
-          <span className="absolute h-20 w-20 rounded-full bg-gradient-to-b from-[#34344f] to-[#161a2f]" />
-          <span className="absolute left-2 top-8 h-5 w-5 rounded-full border border-white/50 bg-white/20" />
-          <span className="absolute right-2 top-8 h-5 w-5 rounded-full border border-white/50 bg-white/20" />
-          <span className="absolute h-9 w-12 rounded-full bg-[#1f2340]" />
-          <span className="absolute left-[36px] top-[46px] h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_6px_rgba(45,212,191,0.9)]" />
-          <span className="absolute right-[36px] top-[46px] h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_6px_rgba(45,212,191,0.9)]" />
+        <div className="relative hidden h-28 w-28 items-center justify-center sm:flex">
+          <span className="absolute h-28 w-28 rounded-full bg-white/20 blur-sm" />
+          <span className="absolute h-24 w-24 rounded-full bg-gradient-to-b from-app-primary/50 to-app-accent/30" />
+          <span className="absolute left-3 top-10 h-5 w-5 rounded-full border border-white/60 bg-white/25" />
+          <span className="absolute right-3 top-10 h-5 w-5 rounded-full border border-white/60 bg-white/25" />
+          <span className="absolute h-10 w-14 rounded-full bg-app-primary/40" />
+          <span className="absolute left-10 top-14 h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-lg shadow-cyan-300/60" />
+          <span className="absolute right-10 top-14 h-2.5 w-2.5 rounded-full bg-cyan-300 shadow-lg shadow-cyan-300/60" />
         </div>
       </div>
     </section>

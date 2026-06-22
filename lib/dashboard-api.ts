@@ -1,48 +1,74 @@
 import { apiFetch } from "@/lib/api-client";
 
-export type DashboardStatApiItem = {
-  key?: string;
-  title?: string;
-  value?: string;
-  change?: string;
-  positive?: boolean;
-  trend?: number[];
-  scoreLabel?: string;
-  scorePercent?: number;
+export type DashboardSummary = {
+  followers?: number;
+  views?: number;
+  engagement?: number;
+  publishedPosts?: number;
+  scheduledPosts?: number;
+  draftPosts?: number;
+  growthRate?: number;
+  aiCreditsRemaining?: number;
 };
 
-export type DashboardPerformancePoint = {
-  date: string;
-  tayangan: number;
-  interaksi: number;
-  komentar: number;
-  bagikan: number;
+export type DashboardCharts = {
+  labels?: string[];
+  views?: number[];
+  engagement?: number[];
 };
 
 export type DashboardTopContentItem = {
-  title: string;
-  platform: string;
-  date: string;
-  rank: string;
-  views: string;
-  likes: string;
-  comments: string;
+  title?: string;
+  platform?: string;
+  date?: string;
+  rank?: string;
+  views?: string | number;
+  likes?: string | number;
+  comments?: string | number;
   gradient?: string;
 };
 
-type DashboardOverviewResponse = {
-  success: boolean;
-  message: string;
-  data?: {
-    dateRangeLabel?: string;
-    stats?: DashboardStatApiItem[];
-    performance?: {
-      series?: DashboardPerformancePoint[];
-    };
-    topContents?: DashboardTopContentItem[];
-  };
+export type DashboardTodayScheduleItem = {
+  time?: string;
+  platform?: string;
+  title?: string;
+  status?: string;
 };
 
-export async function fetchDashboardOverview() {
-  return apiFetch<DashboardOverviewResponse>("/api/v1/dashboard/overview");
+export type DashboardAiInsight = {
+  title?: string;
+  description?: string;
+  recommendation?: string;
+  priority?: string;
+};
+
+export type DashboardHomePayload = {
+  summary?: DashboardSummary;
+  charts?: DashboardCharts;
+  topContent?: DashboardTopContentItem[];
+  todaySchedule?: DashboardTodayScheduleItem[];
+  aiInsight?: DashboardAiInsight;
+  recommendations?: string[];
+};
+
+type DashboardHomeResponse = {
+  success: boolean;
+  message: string;
+  data?: DashboardHomePayload;
+};
+
+export type DashboardHomeParams = {
+  range?: "7d" | "30d" | "90d" | "1y";
+  platform?: string;
+  refresh?: boolean;
+};
+
+export async function fetchDashboardHome(params?: DashboardHomeParams) {
+  const query = new URLSearchParams({
+    range: params?.range ?? "30d",
+    platform: params?.platform ?? "all",
+    refresh: String(params?.refresh ?? false),
+  });
+
+  return apiFetch<DashboardHomeResponse>(`/api/v1/dashboard/home?${query.toString()}`);
 }

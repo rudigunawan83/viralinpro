@@ -1,71 +1,116 @@
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const events = [
+export type TodayCalendarEvent = {
+  time: string;
+  platform: string;
+  title: string;
+  status: string;
+};
+
+const defaultEvents: TodayCalendarEvent[] = [
   {
     time: "09:00",
     platform: "T",
-    platformClassName: "bg-black text-white",
     title: "Cara membuat konten yang engaging",
     status: "Terjadwal",
-    statusClassName: "text-emerald-600",
   },
   {
     time: "12:00",
     platform: "I",
-    platformClassName: "bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 text-white",
     title: "Tips meningkatkan engagement",
     status: "Terjadwal",
-    statusClassName: "text-emerald-600",
   },
   {
     time: "15:00",
     platform: "Y",
-    platformClassName: "bg-red-500 text-white",
     title: "Strategi content plan untuk bisnis",
     status: "Terjadwal",
-    statusClassName: "text-emerald-600",
   },
   {
     time: "18:00",
     platform: "f",
-    platformClassName: "bg-blue-600 text-white",
     title: "Ide konten untuk UMKM",
     status: "Draft",
-    statusClassName: "text-amber-500",
   },
 ];
 
-export function TodayCalendar() {
+function getPlatformStyle(platform: string) {
+  const normalized = platform.trim().toLowerCase();
+
+  if (normalized.includes("tik") || normalized === "t") {
+    return "bg-black text-white";
+  }
+
+  if (normalized.includes("insta") || normalized === "i") {
+    return "bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 text-white";
+  }
+
+  if (normalized.includes("youtube") || normalized === "y") {
+    return "bg-red-500 text-white";
+  }
+
+  if (normalized.includes("facebook") || normalized === "f") {
+    return "bg-blue-600 text-white";
+  }
+
+  return "bg-slate-700 text-white";
+}
+
+function getStatusStyle(status: string) {
+  const normalized = status.trim().toLowerCase();
+
+  if (normalized.includes("draft")) {
+    return "text-amber-500";
+  }
+
+  if (normalized.includes("selesai") || normalized.includes("done") || normalized.includes("published")) {
+    return "text-blue-500";
+  }
+
+  return "text-emerald-600";
+}
+
+type TodayCalendarProps = {
+  events?: TodayCalendarEvent[];
+};
+
+export function TodayCalendar({ events = defaultEvents }: TodayCalendarProps) {
   return (
-    <section className="rounded-2xl border border-app-border bg-app-surface p-4 shadow-[0_6px_18px_rgba(26,33,52,0.05)]">
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-[30px] font-semibold tracking-[-0.025em] text-app-text-primary">Kalender Hari Ini</h2>
-        <button type="button" className="text-sm font-medium text-app-primary">
-          Lihat Kalender
+    <section className="rounded-xl border border-app-border/50 bg-gradient-to-br from-app-surface via-app-surface to-app-surface/50 p-5 shadow-md shadow-app-primary/5 transition hover:shadow-lg hover:shadow-app-primary/10">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-[28px] font-bold tracking-[-0.025em] text-app-text-primary">Kalender Hari Ini</h2>
+        <button type="button" className="text-sm font-bold text-app-primary transition hover:text-app-accent">
+          Lihat Kalender →
         </button>
       </div>
 
-      <div className="space-y-0">
-        {events.map((event) => (
+      <div className="space-y-0.5 rounded-lg border border-app-border/30 overflow-hidden">
+        {events.map((event, index) => (
           <article
             key={`${event.time}-${event.title}`}
-            className="grid grid-cols-[52px_28px_1fr_auto] items-center gap-2 border-b border-app-border/70 px-2 py-2.5 last:border-b-0"
+            className={cn(
+              "grid grid-cols-[56px_36px_1fr_auto] items-center gap-3 px-3.5 py-3 transition hover:bg-app-surface/50",
+              index !== events.length - 1 && "border-b border-app-border/20"
+            )}
           >
-            <p className="text-[13px] text-app-text-secondary">{event.time}</p>
+            <p className="text-sm font-bold text-app-text-secondary">{event.time}</p>
             <div
-              className={`flex h-5 w-5 items-center justify-center rounded-md text-[10px] font-semibold ${event.platformClassName}`}
+              className={`flex h-7 w-7 items-center justify-center rounded-lg text-xs font-bold shadow-md ${getPlatformStyle(event.platform)}`}
             >
               {event.platform}
             </div>
-            <p className="truncate text-[12px] text-app-text-primary">{event.title}</p>
-            <p className={`text-[11px] font-semibold ${event.statusClassName}`}>{event.status}</p>
+            <p className="truncate text-sm font-medium text-app-text-primary">{event.title}</p>
+            <p className={cn("text-xs font-bold", getStatusStyle(event.status))}>
+              {event.status}
+            </p>
           </article>
         ))}
       </div>
 
       <button
         type="button"
-        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-app-primary/35 px-4 py-2.5 text-sm font-semibold text-app-primary"
+        className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-app-primary/30 bg-app-primary/10 px-4 py-3 text-sm font-bold text-app-primary transition hover:bg-app-primary/20 hover:shadow-md"
       >
         Buat Konten Baru
         <ArrowRight className="h-4 w-4" />

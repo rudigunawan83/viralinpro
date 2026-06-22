@@ -26,19 +26,19 @@ export function AppHeader() {
   const title = titleMap[pathname] ?? "Viralin.pro";
 
   return (
-    <header className="sticky top-0 z-20 border-b border-app-border bg-app-surface/95 backdrop-blur">
+    <header className="sticky top-0 z-20 glass border-b border-app-border shadow-sm">
       <div className="flex h-[78px] items-center justify-between px-4 sm:px-5">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={toggleSidebar}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-app-border text-app-text-secondary transition hover:text-app-text-primary"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-app-border bg-app-surface/50 text-app-text-secondary transition hover:bg-app-surface hover:text-app-primary hover:shadow-md"
             aria-label="Toggle sidebar"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <div>
-            <p className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-app-text-primary">{title}</p>
+          <div className="animate-slide-in-left">
+            <p className="text-[24px] font-bold leading-none tracking-[-0.03em] text-app-text-primary">{title}</p>
             <p className="mt-1 text-[12px] text-app-text-secondary">Selamat datang kembali, Andi! 👋</p>
           </div>
         </div>
@@ -46,28 +46,28 @@ export function AppHeader() {
         <div className="flex items-center gap-2.5">
           <button
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl bg-app-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-95"
+            className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-br from-app-primary to-app-accent px-4 py-2 text-sm font-semibold text-white shadow-md shadow-app-primary/30 transition hover:shadow-lg hover:shadow-app-primary/40 hover:scale-105"
           >
             <Plus className="h-4 w-4" />
             Buat Konten
           </button>
           <button
             type="button"
-            className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-app-border text-app-text-secondary transition hover:text-app-text-primary"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-app-border/50 bg-app-surface/50 text-app-text-secondary transition hover:bg-app-surface hover:text-app-primary hover:shadow-md"
             aria-label="Gift"
           >
             <Gift className="h-[18px] w-[18px]" />
           </button>
           <button
             type="button"
-            className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-app-border text-app-text-secondary transition hover:text-app-text-primary"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-app-border/50 bg-app-surface/50 text-app-text-secondary transition hover:bg-app-surface hover:text-app-primary hover:shadow-md"
             aria-label="Notifications"
           >
-            <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500" />
+            <span className="absolute right-2 top-2 h-2.5 w-2.5 rounded-full bg-red-500 shadow-sm shadow-red-500/50" />
             <Bell className="h-[18px] w-[18px]" />
           </button>
-          <button className="inline-flex items-center gap-2 rounded-xl border border-transparent px-2 py-1 transition hover:border-app-border">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-app-border text-sm font-semibold text-app-text-primary">
+          <button className="inline-flex items-center gap-2 rounded-lg border border-transparent px-3 py-1.5 transition hover:bg-app-surface/50 hover:border-app-border hover:shadow-md">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-app-primary to-app-accent text-sm font-semibold text-white shadow-md shadow-app-primary/30">
               AP
             </div>
             <div className="hidden text-left sm:block">

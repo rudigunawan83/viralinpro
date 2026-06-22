@@ -52,22 +52,22 @@ export function AppSidebar() {
   return (
     <aside
       className={cn(
-        "sticky top-0 flex h-screen flex-col border-r border-app-border bg-app-surface px-3 py-5 transition-all duration-300",
+        "sticky top-0 flex h-screen flex-col border-r border-app-border glass px-3 py-5 transition-all duration-300 shadow-sm",
         isSidebarCollapsed ? "w-20" : "w-64",
       )}
     >
-      <div className="mb-7 flex items-center gap-3 px-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-app-primary to-app-accent text-white shadow-md shadow-app-primary/20">
-          <span className="text-sm font-bold">V</span>
+      <div className="mb-7 flex items-center gap-3 px-2 animate-slide-in-left">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-app-primary via-app-secondary to-app-accent text-white shadow-lg shadow-app-primary/40">
+          <span className="text-lg font-bold">V</span>
         </div>
         {!isSidebarCollapsed ? (
           <div>
-            <p className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-app-text-primary">viralin.pro</p>
+            <p className="text-[20px] font-bold leading-none tracking-[-0.02em] text-app-text-primary">viralin.pro</p>
           </div>
         ) : null}
       </div>
 
-      <nav className="space-y-1">
+      <nav className="space-y-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -77,13 +77,13 @@ export function AppSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "group flex items-center rounded-xl px-3 py-2.5 text-[14px] font-medium transition",
+                "group flex items-center rounded-lg px-3 py-2.5 text-[14px] font-medium transition duration-200",
                 isActive
-                  ? "bg-app-primary text-white shadow"
-                  : "text-app-text-secondary hover:bg-app-primary/5 hover:text-app-text-primary",
+                  ? "bg-gradient-to-r from-app-primary to-app-accent text-white shadow-md shadow-app-primary/30"
+                  : "text-app-text-secondary hover:bg-app-surface/50 hover:text-app-primary",
               )}
             >
-              <Icon className="h-[18px] w-[18px]" />
+              <Icon className="h-[18px] w-[18px] flex-shrink-0" />
               {!isSidebarCollapsed ? <span className="ml-3 truncate">{item.label}</span> : null}
             </Link>
           );
@@ -91,21 +91,21 @@ export function AppSidebar() {
       </nav>
 
       {!isSidebarCollapsed ? (
-        <div className="mt-auto space-y-3">
-          <div className="rounded-2xl border border-app-border bg-[#f8f9fd] p-4">
-            <p className="text-[11px] text-app-text-secondary">Paket Anda</p>
-            <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-app-primary/10 px-2 py-1 text-xs font-medium text-app-primary">
+        <div className="mt-auto space-y-3 animate-slide-in-up">
+          <div className="rounded-xl border border-app-border/50 bg-gradient-to-br from-app-primary/5 to-app-accent/5 p-4 shadow-sm">
+            <p className="text-[11px] font-semibold text-app-text-secondary uppercase tracking-wide">Paket Anda</p>
+            <div className="mt-2 inline-flex items-center gap-2 rounded-lg bg-app-primary/15 px-2.5 py-1.5 text-xs font-bold text-app-primary shadow-sm">
               <Crown className="h-3.5 w-3.5" />
               Pro Plan
             </div>
             <p className="mt-3 text-[11px] text-app-text-secondary">Berakhir 12 Juni 2025</p>
-            <div className="mt-3 h-2 overflow-hidden rounded-full bg-app-border">
-              <div className="h-full w-3/4 rounded-full bg-app-primary" />
+            <div className="mt-3 h-2 overflow-hidden rounded-full bg-app-border/50">
+              <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-app-primary to-app-accent shadow-sm shadow-app-primary/30" />
             </div>
             <p className="mt-2 text-[11px] text-app-text-secondary">75% dari kuota AI terpakai</p>
             <button
               type="button"
-              className="mt-4 inline-flex w-full items-center justify-center rounded-xl border border-app-primary/45 bg-white px-3 py-2 text-xs font-semibold text-app-primary transition hover:bg-app-primary/5"
+              className="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-app-primary/30 bg-app-primary/10 px-3 py-2 text-xs font-semibold text-app-primary transition hover:bg-app-primary/20 hover:shadow-md"
             >
               Kelola Paket
             </button>
@@ -114,7 +114,7 @@ export function AppSidebar() {
           <button
             type="button"
             onClick={handleLogout}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-red-200/50 bg-red-50/50 px-3 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-50 hover:shadow-md dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
           >
             <LogOut className="h-3.5 w-3.5" />
             Logout

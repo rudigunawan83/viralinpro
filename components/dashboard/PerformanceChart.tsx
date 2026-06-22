@@ -57,31 +57,31 @@ export function PerformanceChart({ data = defaultChartData }: PerformanceChartPr
   const activeTabLabel = tabs.find((tab) => tab.key === activeTab)?.label ?? "Data";
 
   return (
-    <section className="rounded-2xl border border-app-border bg-app-surface p-4 shadow-[0_6px_18px_rgba(26,33,52,0.05)]">
+    <section className="rounded-xl border border-app-border/50 bg-gradient-to-br from-app-surface via-app-surface to-app-surface/50 p-5 shadow-md shadow-app-primary/5 transition hover:shadow-lg hover:shadow-app-primary/10">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <h2 className="text-[31px] font-semibold tracking-[-0.025em] text-app-text-primary">Performa Konten</h2>
+          <h2 className="text-[28px] font-bold tracking-[-0.025em] text-app-text-primary">Performa Konten</h2>
           <Info className="h-4 w-4 text-app-text-secondary" />
         </div>
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-xl border border-app-border bg-app-background px-3 py-1.5 text-xs font-medium text-app-text-secondary"
+          className="inline-flex items-center gap-2 rounded-lg border border-app-border/50 bg-app-surface/50 px-3 py-2 text-xs font-semibold text-app-text-secondary transition hover:bg-app-surface hover:shadow-md"
         >
           Semua Platform
           <ChevronDown className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="mt-3.5 flex flex-wrap gap-1.5">
+      <div className="mt-4 flex flex-wrap gap-2">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`rounded-full px-3 py-1 text-[11px] font-medium transition ${
+            className={`rounded-lg px-3.5 py-1.5 text-[12px] font-semibold transition ${
               activeTab === tab.key
-                ? "bg-app-primary text-white"
-                : "border border-app-border bg-app-background text-app-text-secondary hover:text-app-text-primary"
+                ? "bg-gradient-to-r from-app-primary to-app-accent text-white shadow-md shadow-app-primary/30"
+                : "border border-app-border/50 bg-app-surface/50 text-app-text-secondary hover:bg-app-surface"
             }`}
           >
             {tab.label}
@@ -89,41 +89,42 @@ export function PerformanceChart({ data = defaultChartData }: PerformanceChartPr
         ))}
       </div>
 
-      <div className="mt-4 h-[266px]">
+      <div className="mt-5 h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 10, left: -22, bottom: 0 }}>
             <defs>
               <linearGradient id="viralinChartFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#6D5EF9" stopOpacity={0.35} />
-                <stop offset="100%" stopColor="#6D5EF9" stopOpacity={0} />
+                <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.4} />
+                <stop offset="100%" stopColor="#7c3aed" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="4 6" vertical={false} stroke="#E5E7EB" />
-            <XAxis dataKey="date" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "#6B7280" }} />
+            <CartesianGrid strokeDasharray="4 6" vertical={false} stroke="var(--border)" opacity={0.5} />
+            <XAxis dataKey="date" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: "var(--text-secondary)" }} />
             <YAxis
               tickLine={false}
               axisLine={false}
-              tick={{ fontSize: 12, fill: "#9CA3AF" }}
+              tick={{ fontSize: 12, fill: "var(--text-secondary)" }}
               tickFormatter={yAxisFormatter}
               width={44}
             />
             <Tooltip
-              cursor={{ stroke: "#6D5EF9", strokeWidth: 1, strokeDasharray: "4 4" }}
+              cursor={{ stroke: "var(--primary)", strokeWidth: 2, strokeDasharray: "4 4" }}
               contentStyle={{
-                borderRadius: 12,
-                border: "1px solid #E5E7EB",
-                boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)",
+                borderRadius: 8,
+                border: "1px solid var(--border)",
+                backgroundColor: "var(--surface)",
+                boxShadow: "0 12px 28px rgba(0, 0, 0, 0.12)",
               }}
               formatter={(value) => [yAxisFormatter(Number(value ?? 0)), activeTabLabel]}
             />
             <Area
               type="monotone"
               dataKey={activeTab}
-              stroke="#6D5EF9"
+              stroke="var(--primary)"
               fill="url(#viralinChartFill)"
-              strokeWidth={3}
+              strokeWidth={2.5}
               dot={false}
-              activeDot={{ r: 5, fill: "#6D5EF9", stroke: "#FFFFFF", strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: "var(--primary)", stroke: "var(--surface)", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

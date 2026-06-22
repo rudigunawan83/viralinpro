@@ -1,17 +1,22 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f7fb;
+  --background: #f0f3f8;
   --surface: #ffffff;
-  --foreground: #1f2433;
-  --text-secondary: #7d8597;
-  --border: #e8ecf3;
-  --primary: #6d5ef9;
+  --foreground: #0f172a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --primary: #7c3aed;
   --secondary: #8b5cf6;
-  --accent: #a855f7;
-  --success: #22c55e;
+  --accent: #ec4899;
+  --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
+  
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 24px rgba(15, 23, 42, 0.12);
+  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.15);
 }
 
 @theme inline {
@@ -30,12 +35,19 @@
 }
 
 .dark {
-  --background: #111319;
-  --surface: #1a1d24;
-  --foreground: #f3f4f6;
-  --text-secondary: #9ca3af;
-  --border: #2f3540;
-  --primary: #8b7cff;
+  --background: #0f172a;
+  --surface: #1e293b;
+  --foreground: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --border: #334155;
+  --primary: #a78bfa;
+  --secondary: #c4b5fd;
+  --accent: #f472b6;
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 20px rgba(167, 139, 250, 0.2);
 }
 
 body {
@@ -46,4 +58,79 @@ body {
 
 * {
   border-color: var(--border);
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+.gradient-border {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 300ms ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 300ms ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 300ms ease-out;
 }
